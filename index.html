@@ -539,3 +539,202 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jeu du Plus ou Moins avancé</title>
+<style>
+  /* ===== Reset & Base ===== */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #c0d6f9 0%, #2f52e0 100%);
+    color: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  #game {
+    background: white;
+    max-width: 480px;
+    width: 100%;
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+    user-select: none;
+  }
+  h1 {
+    text-align: center;
+    color: #2f52e0;
+    margin-bottom: 20px;
+  }
+
+  /* ===== Boutons ===== */
+  button {
+    cursor: pointer;
+    background: #2f52e0;
+    border: none;
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(47,82,224,0.4);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 5px 10px 20px 0;
+  }
+  button:hover {
+    background: #1a33a7;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(26,51,167,0.6);
+  }
+  button:disabled {
+    background: #a0a7b6;
+    cursor: default;
+    box-shadow: none;
+    transform: none;
+  }
+
+  /* ===== Inputs ===== */
+  input[type="number"] {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    border: 2px solid #2f52e0;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+  }
+  input[type="number"]:focus {
+    outline: none;
+    border-color: #1a33a7;
+  }
+
+  /* ===== Text affiché ===== */
+  #feedback {
+    font-size: 1.3rem;
+    font-weight: 700;
+    min-height: 36px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  #feedback.more {
+    color: #2f52e0;
+  }
+  #feedback.less {
+    color: #e02424;
+  }
+  #feedback.correct {
+    color: #23b23b;
+  }
+  #feedback.error {
+    color: #c00;
+  }
+
+  /* ===== Historique des essais ===== */
+  #history {
+    max-height: 150px;
+    overflow-y: auto;
+    border-top: 2px solid #2f52e0;
+    padding-top: 10px;
+    font-size: 1rem;
+  }
+  #history span {
+    display: inline-block;
+    padding: 5px 8px;
+    margin: 3px 3px 3px 0;
+    border-radius: 6px;
+    color: white;
+    font-weight: 700;
+  }
+  #history .more {
+    background-color: #2f52e0;
+  }
+  #history .less {
+    background-color: #e02424;
+  }
+  #history .correct {
+    background-color: #23b23b;
+  }
+
+  /* ===== Chronomètre ===== */
+  #timer {
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: #444;
+  }
+
+  /* ===== Difficulté ===== */
+  #levelSelector {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #levelSelector label {
+    font-weight: 600;
+    color: #2f52e0;
+  }
+  select {
+    font-size: 1.1rem;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 2px solid #2f52e0;
+  }
+
+  /* ===== Indice ===== */
+  #hint {
+    text-align: center;
+    font-style: italic;
+    color: #777;
+    margin-bottom: 20px;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 520px) {
+    #game {
+      padding: 20px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="game" role="main" aria-label="Jeu du Plus ou Moins">
+  <h1>Jeu du Plus ou Moins</h1>
+
+  <div id="levelSelector" aria-label="Sélection du niveau de difficulté">
+    <label for="level">Choisir le niveau :</label>
+    <select id="level" aria-describedby="levelDesc">
+      <option value="100">Facile (1 à 100)</option>
+      <option value="500">Moyen (1 à 500)</option>
+      <option value="1000">Difficile (1 à 1000)</option>
+    </select>
+  </div>
+
+  <div id="timer" aria-live="polite" aria-atomic="true">Temps : 0s</div>
+
+  <input type="number" id="guessInput" aria-label="Entrez votre proposition" placeholder="Entrez un nombre" min="1" />
+  <button id="guessBtn">Deviner</button>
+  <button id="restartBtn" disabled>Recommencer</button>
+
+  <div id="feedback" role="alert" aria-live="assertive"></div>
+  <div id="hint"></div>
+
+  <div id="history" aria-label="Historique des essais"></div>
+</div>
+
+<script>
+  // JS complet étape 2 juste après (en suivant la réponse)
+</script>
+
+</body>
+</html>
