@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Animation simple</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+      background: #f0f8ff;
+      color: #333;
+    }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    #animatedText {
+      font-size: 2rem;
+      color: #1e90ff;
+      opacity: 0;
+      animation: fadeIn 3s forwards;
+      animation-delay: 2s;
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Ceci est un site</h1>
+  <div id="animatedText">Non jure</div>
+</body>
+</html>
