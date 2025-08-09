@@ -2,35 +2,540 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Animation simple</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ceci est un site - Version avancée</title>
   <style>
+    /* RESET */
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 100px;
-      background: #f0f8ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f0f8ff 0%, #d1e8ff 100%);
+      color: #222;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a {
+      color: #1e90ff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover, a:focus {
+      color: #0f60c1;
+      outline: none;
+    }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      background: #1e90ff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      z-index: 10000;
+    }
+    nav {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+    }
+    nav .logo {
+      color: white;
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      user-select: none;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+    nav ul li a {
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 8px 12px;
+      border-radius: 5px;
+      position: relative;
+    }
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 3px;
+      background-color: #ffd700;
+      transition: width 0.3s ease;
+      border-radius: 3px;
+    }
+    nav ul li a:hover::after,
+    nav ul li a:focus::after {
+      width: 70%;
+    }
+
+    /* BURGER MENU - MOBILE */
+    .burger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 6px;
+    }
+    .burger div {
+      width: 25px;
+      height: 3px;
+      background: white;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    /* MOBILE NAV */
+    @media (max-width: 768px) {
+      nav ul {
+        position: fixed;
+        top: 60px;
+        right: -100%;
+        background: #1e90ff;
+        flex-direction: column;
+        width: 200px;
+        height: calc(100vh - 60px);
+        padding-top: 30px;
+        gap: 20px;
+        transition: right 0.3s ease;
+        border-radius: 0 0 0 10px;
+      }
+      nav ul.active {
+        right: 0;
+      }
+      .burger {
+        display: flex;
+      }
+    }
+
+    /* SECTIONS */
+    section {
+      max-width: 1000px;
+      margin: 120px auto 60px auto;
+      padding: 0 20px;
+    }
+    h1, h2, h3 {
+      color: #1e90ff;
+      margin-bottom: 20px;
+    }
+    p {
+      margin-bottom: 15px;
+      font-size: 1.1rem;
       color: #333;
     }
-    h1 {
+    .highlight {
+      color: #ffd700;
+      font-weight: 700;
+    }
+
+    /* ACCUEIL */
+    #accueil {
+      text-align: center;
+      padding-top: 80px;
+    }
+    #accueil h1 {
       font-size: 3rem;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
+      user-select: none;
+    }
+    #accueil p {
+      font-size: 1.3rem;
+      margin-bottom: 30px;
     }
     #animatedText {
       font-size: 2rem;
-      color: #1e90ff;
+      color: #0f60c1;
       opacity: 0;
-      animation: fadeIn 3s forwards;
+      animation: fadeInMove 3s forwards;
       animation-delay: 2s;
+      user-select: none;
     }
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
+    @keyframes fadeInMove {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
       }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* TIMELINE À PROPOS */
+    .timeline {
+      position: relative;
+      padding-left: 40px;
+      margin-top: 30px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 18px;
+      width: 4px;
+      height: 100%;
+      background: #1e90ff;
+      border-radius: 2px;
+    }
+    .event {
+      position: relative;
+      margin-bottom: 40px;
+    }
+    .event::before {
+      content: '';
+      position: absolute;
+      left: -7px;
+      top: 5px;
+      width: 16px;
+      height: 16px;
+      background: #ffd700;
+      border-radius: 50%;
+      border: 4px solid #1e90ff;
+      box-sizing: border-box;
+    }
+    .event h3 {
+      margin-bottom: 8px;
+      color: #0f60c1;
+    }
+    .event p {
+      color: #555;
+    }
+
+    /* GALERIE */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      margin-top: 30px;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      user-select: none;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    /* LIGHTBOX */
+    #lightboxOverlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 100000;
+    }
+    #lightboxOverlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+    #lightboxOverlay img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #fff;
+      user-select: none;
+    }
+    #lightboxOverlay .closeBtn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+      z-index: 100001;
+    }
+    #lightboxOverlay .closeBtn:hover {
+      color: #ffd700;
+    }
+
+    /* FORMULAIRE */
+    form {
+      background: white;
+      padding: 25px 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: 30px auto 0 auto;
+    }
+    form label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 7px;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      resize: vertical;
+      transition: border-color 0.3s;
+    }
+    form input:focus, form textarea:focus {
+      border-color: #1e90ff;
+      outline: none;
+    }
+    form button {
+      background: #1e90ff;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      user-select: none;
+    }
+    form button:hover {
+      background: #0f60c1;
+    }
+    .error {
+      color: red;
+      font-size: 0.9rem;
+      margin-top: -15px;
+      margin-bottom: 15px;
+    }
+    .success {
+      text-align: center;
+      color: green;
+      font-weight: 700;
+      margin-top: 15px;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #1e90ff;
+      color: white;
+      font-weight: 600;
+      user-select: none;
+    }
+
+    /* UTILITAIRES */
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <h1>Ceci est un site</h1>
-  <div id="animatedText">Non jure</div>
+  <header>
+    <nav>
+      <div class="logo">Ceci est un site</div>
+      <div class="burger" aria-label="Menu" tabindex="0" role="button">
+        <div></div><div></div><div></div>
+      </div>
+      <ul>
+        <li><a href="#accueil" tabindex="1">Accueil</a></li>
+        <li><a href="#apropos" tabindex="2">À propos</a></li>
+        <li><a href="#galerie" tabindex="3">Galerie</a></li>
+        <li><a href="#contact" tabindex="4">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="accueil" tabindex="0">
+      <h1>Bienvenue sur mon site avancé !</h1>
+      <p>Voici un exemple de site avec animations, galerie, formulaire et bien plus.</p>
+      <div id="animatedText">Non jure</div>
+    </section>
+
+    <section id="apropos" tabindex="0">
+      <h2>À propos</h2>
+      <p>Découvrez l’histoire de ce projet avec cette timeline :</p>
+      <div class="timeline">
+        <div class="event">
+          <h3>2023 - Début du projet</h3>
+          <p>Création de l’idée et premières lignes de code.</p>
+        </div>
+        <div class="event">
+          <h3>2024 - Ajout des fonctionnalités</h3>
+          <p>Développement du menu, des animations et de la galerie.</p>
+        </div>
+        <div class="event">
+          <h3>2025 - Version finale</h3>
+          <p>Optimisation et mise en ligne publique.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="galerie" tabindex="0">
+      <h2>Galerie photos</h2>
+      <p>Cliquer sur une image pour l’agrandir :</p>
+      <div class="gallery">
+        <img src="https://picsum.photos/id/1015/600/400" alt="Montagne" tabindex="0" />
+        <img src="https://picsum.photos/id/1016/600/400" alt="Forêt" tabindex="0" />
+        <img src="https://picsum.photos/id/1020/600/400" alt="Lac" tabindex="0" />
+        <img src="https://picsum.photos/id/1024/600/400" alt="Ciel" tabindex="0" />
+        <img src="https://picsum.photos/id/1027/600/400" alt="Plage" tabindex="0" />
+        <img src="https://picsum.photos/id/1031/600/400" alt="Désert" tabindex="0" />
+      </div>
+    </section>
+
+    <section id="contact" tabindex="0">
+      <h2>Contact</h2>
+      <form id="contactForm" novalidate>
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom" placeholder="Ton nom" required />
+        <div class="error hidden" id="errorNom">Veuillez entrer un nom valide.</div>
+
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" placeholder="Ton email" required />
+        <div class="error hidden" id="errorEmail">Veuillez entrer un email valide.</div>
+
+        <label for="message">Message :</label>
+        <textarea id="message" name="message" rows="5" placeholder="Écris ton message ici..." required></textarea>
+        <div class="error hidden" id="errorMessage">Le message ne peut pas être vide.</div>
+
+        <button type="submit">Envoyer</button>
+        <div class="success hidden" id="successMessage">Merci pour ton message !</div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Ceci est un site avancé. Tous droits réservés.
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div id="lightboxOverlay" aria-modal="true" role="dialog" tabindex="-1">
+    <span class="closeBtn" role="button" aria-label="Fermer la lightbox" tabindex="0">&times;</span>
+    <img src="" alt="Image agrandie" />
+  </div>
+
+  <script>
+    // Burger menu toggle
+    const burger = document.querySelector('.burger');
+    const navUl = document.querySelector('nav ul');
+    burger.addEventListener('click', () => {
+      navUl.classList.toggle('active');
+      burger.classList.toggle('active');
+    });
+    burger.addEventListener('keypress', e => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        navUl.classList.toggle('active');
+        burger.classList.toggle('active');
+      }
+    });
+
+    // Lightbox
+    const galleryImages = document.querySelectorAll('.gallery img');
+    const lightboxOverlay = document.getElementById('lightboxOverlay');
+    const lightboxImg = lightboxOverlay.querySelector('img');
+    const closeBtn = lightboxOverlay.querySelector('.closeBtn');
+
+    galleryImages.forEach(img => {
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightboxOverlay.classList.add('active');
+        lightboxOverlay.focus();
+      });
+      img.addEventListener('keypress', e => {
+        if(e.key === 'Enter' || e.key === ' ') {
+          lightboxImg.src = img.src;
+          lightboxImg.alt = img.alt;
+          lightboxOverlay.classList.add('active');
+          lightboxOverlay.focus();
+        }
+      });
+    });
+
+    closeBtn.addEventListener('click', () => {
+      lightboxOverlay.classList.remove('active');
+    });
+    closeBtn.addEventListener('keypress', e => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        lightboxOverlay.classList.remove('active');
+      }
+    });
+    lightboxOverlay.addEventListener('click', e => {
+      if(e.target === lightboxOverlay) {
+        lightboxOverlay.classList.remove('active');
+      }
+    });
+
+    // Form validation
+    const form = document.getElementById('contactForm');
+    const nomInput = document.getElementById('nom');
+    const emailInput = document.getElementById('email');
+    const messageInput = document.getElementById('message');
+    const errorNom = document.getElementById('errorNom');
+    const errorEmail = document.getElementById('errorEmail');
+    const errorMessage = document.getElementById('errorMessage');
+    const successMessage = document.getElementById('successMessage');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      let valid = true;
+
+      // Nom validation
+      if(nomInput.value.trim().length < 2) {
+        errorNom.classList.remove('hidden');
+        valid = false;
+      } else {
+        errorNom.classList.add('hidden');
+      }
+
+      // Email validation simple
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if(!emailPattern.test(emailInput.value.trim())) {
+        errorEmail.classList.remove('hidden');
+        valid = false;
+      } else {
+        errorEmail.classList.add('hidden');
+      }
+
+      // Message validation
+      if(messageInput.value.trim().length < 5) {
+        errorMessage.classList.remove('hidden');
+        valid = false;
+      } else {
+        errorMessage.classList.add('hidden');
+      }
+
+      if(valid) {
+        successMessage.classList.remove('hidden');
+        form.reset();
+        // Ici tu peux ajouter un vrai envoi avec fetch/ajax si tu veux
+      } else {
+        successMessage.classList.add('hidden');
+      }
+    });
+
+    // Keyboard accessibility for lightbox close button
+    closeBtn.addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        lightboxOverlay.classList.remove('active');
+      }
+    });
+  </script>
 </body>
 </html>
